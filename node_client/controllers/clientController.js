@@ -29,6 +29,20 @@ function parsePacket(buffer) {
 }
 
 /**
+ * Validates a parsed packet to ensure data integrity.
+ * @param {Object} packet - The parsed packet to validate.
+ * @returns {boolean} - Returns true if the packet is valid, otherwise false.
+ */
+function validatePacket(packet) {
+    if (typeof packet.symbol !== 'string' || packet.symbol.length !== 4) return false; // Validate symbol
+    if (packet.buySellIndicator !== 'B' && packet.buySellIndicator !== 'S') return false; // Validate buy/sell indicator
+    if (typeof packet.quantity !== 'number' || packet.quantity <= 0) return false; // Validate quantity
+    if (typeof packet.price !== 'number' || packet.price <= 0) return false; // Validate price
+    if (typeof packet.sequence !== 'number' || packet.sequence < 0) return false; // Validate sequence
+    return true;
+}
+
+/**
  * Requests all packets from the server.
  */
 function requestAllPackets() {
@@ -72,8 +86,12 @@ function handleData(data) {
     while (offset < data.length) {
         const packet = data.slice(offset, offset + 17); // Each packet is 17 bytes long
         const parsedPacket = parsePacket(packet); // Parses the packet
-        packetModel.receivedPackets.push(parsedPacket); // Adds the parsed packet to the received packets array
-        packetModel.receivedSequences.add(parsedPacket.sequence); // Adds the sequence number to the set of received sequences
+        if (validatePacket(parsedPacket)) {
+            packetModel.receivedPackets.push(parsedPacket); // Adds the parsed packet to the received packets array
+            packetModel.receivedSequences.add(parsedPacket.sequence); // Adds the sequence number to the set of received sequences
+        } else {
+            clientView.showGeneralInfo(`Invalid packet detected and skipped: ${JSON.stringify(parsedPacket)}`);
+        }
         offset += 17; // Moves the offset to the next packet
     }
     clientView.showPacketsReceived(packetModel.receivedPackets); // Displays the received packets
