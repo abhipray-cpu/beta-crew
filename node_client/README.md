@@ -13,7 +13,7 @@ The BetaCrew Mock Exchange Client is a Node.js application designed to interact 
 1. **Clone the repository**
 
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/abhipray-cpu/beta-crew.git
     cd betacrew_exchange_client
     ```
 
