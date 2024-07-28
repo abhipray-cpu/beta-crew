@@ -1,0 +1,19 @@
+{
+  "name": "node_client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon run app.js"
+  },
+  "keywords": [],
+  "author": "Abhipray Dumka",
+  "license": "ISC",
+  "description": "This is the client that listens to all the ticks from server over tcp and generates a json response file",
+  "dependencies": {
+    "net": "^1.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
