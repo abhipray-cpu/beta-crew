@@ -17,13 +17,9 @@ The BetaCrew Mock Exchange Client is a Node.js application designed to interact 
     cd betacrew_exchange_client
     ```
 
-2. **Install dependencies**
 
-    ```bash
-    npm install
-    ```
 
-3. **Download and run the BetaCrew exchange server**
+2. **Download and run the BetaCrew exchange server**
 
     ```bash
     cd ./betacrew_exchange_server
@@ -36,6 +32,7 @@ The BetaCrew Mock Exchange Client is a Node.js application designed to interact 
 
     ```bash
     cd ./node_client
+    npm i
     npm start
     ```
 
